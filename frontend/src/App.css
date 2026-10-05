@@ -1,0 +1,219 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 0 30px;
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid #334155;
+}
+
+.card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  color: #f1f5f9;
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sensor-input label {
+  display: block;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.sensor-input input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sensor-input input:focus {
+  border-color: #38bdf8;
+}
+
+.predict-btn {
+  width: 100%;
+  padding: 14px;
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.predict-btn:hover {
+  background: #0ea5e9;
+}
+
+.predict-btn:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.error {
+  border-color: #dc2626;
+  color: #fca5a5;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rul-display {
+  text-align: center;
+}
+
+.rul-display h2 {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.rul-number {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #38bdf8;
+  line-height: 1;
+}
+
+.cycles {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.status-badge {
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: white;
+}
+
+.recommendation {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.cost-saving {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #334155;
+}
+
+.cost-saving h3 {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.cost-amount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #4ade80;
+}
+
+.cost-note {
+  color: #64748b;
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.info-card {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #334155;
+}
+
+.info-card h4 {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.info-card p {
+  color: #38bdf8;
+  font-weight: 700;
+  font-size: 1rem;
+}

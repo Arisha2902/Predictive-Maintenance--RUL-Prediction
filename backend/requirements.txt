@@ -1,0 +1,1 @@
+pip install fastapi uvicorn scikit-learn joblib pandas numpy
