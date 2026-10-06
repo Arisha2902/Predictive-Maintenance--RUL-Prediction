@@ -156,7 +156,7 @@ function App() {
     setError(null);
     try {
       const response = await axios.post(
-        'https://predictive-maintenance-rul-prediction.onrender.com/',
+       'https://predictive-maintenance-rul-prediction.onrender.com/predict',
         { sensor_values: sensors }
       );
       const data = response.data;
