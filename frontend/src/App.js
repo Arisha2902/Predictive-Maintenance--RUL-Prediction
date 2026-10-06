@@ -101,7 +101,7 @@ function RULGauge({ rul }) {
       {/* Track */}
       <path
         d={`M ${x1} ${y1} A ${r} ${r} 0 0 1 ${trackX2} ${trackY2}`}
-        fill="none" stroke="#CC5500" strokeWidth="14"
+        fill="none" stroke={color} strokeWidth="14"
         strokeLinecap="round"
       />
       {/* Filled arc */}
