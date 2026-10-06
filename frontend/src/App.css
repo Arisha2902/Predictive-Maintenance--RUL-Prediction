@@ -2,8 +2,8 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: #9CAF88;;
+  color: #e8e4dc;
   min-height: 100vh;
 }
 
@@ -15,19 +15,23 @@ body {
 
 .header {
   text-align: center;
-  padding: 30px 0 24px;
+  padding: 36px 0 28px;
+  border-bottom: 1px solid #2e2e28;
+  margin-bottom: 28px;
 }
 
 .header h1 {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  color: #38bdf8;
+  color: #232320;
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 
 .header p {
-  color: #94a3b8;
-  margin-bottom: 14px;
+  color: #484845;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
 }
 
 .badges {
@@ -38,10 +42,10 @@ body {
 }
 
 .badge {
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #38bdf8;
-  padding: 4px 12px;
+  background: #2a2a24;
+  border: 1px solid #3a3a32;
+  color: #9CAF88;
+  padding: 4px 14px;
   border-radius: 20px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -59,23 +63,25 @@ body {
 }
 
 .card {
-  background: #1e293b;
-  border-radius: 12px;
+  background: #232320;
+  border-radius: 14px;
   padding: 24px;
-  border: 1px solid #334155;
+  border: 1px solid #2e2e28;
   margin-bottom: 16px;
 }
 
 .card h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 16px;
-  color: #f1f5f9;
+  color: #e8e4dc;
+  font-weight: 700;
 }
 
 .card h3 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin-bottom: 14px;
-  color: #f1f5f9;
+  color: #e8e4dc;
+  font-weight: 700;
 }
 
 .card-header {
@@ -93,22 +99,25 @@ body {
 }
 
 .preset {
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 6px;
   border: none;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  letter-spacing: 0.03em;
 }
 
 .preset.healthy {
-  background: #166534;
-  color: #86efac;
+  background: #2d3d26;
+  color: #9CAF88;
+  border: 1px solid #9CAF88;
 }
 
 .preset.critical {
-  background: #7f1d1d;
-  color: #fca5a5;
+  background: #3d2418;
+  color: #CC5500;
+  border: 1px solid #CC5500;
 }
 
 .engine-id-row {
@@ -119,19 +128,21 @@ body {
 }
 
 .engine-id-row label {
-  font-size: 0.8rem;
-  color: #94a3b8;
+  font-size: 0.78rem;
+  color: #A7A7A7;
   white-space: nowrap;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .engine-id-input {
   flex: 1;
   padding: 7px 12px;
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: #1a1a18;
+  border: 1px solid #3a3a32;
   border-radius: 8px;
-  color: #e2e8f0;
+  color: #e8e4dc;
   font-size: 0.9rem;
   outline: none;
 }
@@ -145,62 +156,66 @@ body {
 
 .sensor-input label {
   display: block;
-  font-size: 0.75rem;
-  color: #94a3b8;
+  font-size: 0.72rem;
+  color: #A7A7A7;
   margin-bottom: 4px;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .sensor-input input {
   width: 100%;
   padding: 7px 10px;
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: #1a1a18;
+  border: 1px solid #3a3a32;
   border-radius: 6px;
-  color: #e2e8f0;
+  color: #e8e4dc;
   font-size: 0.85rem;
   outline: none;
+  transition: border-color 0.2s;
 }
 
 .sensor-input input:focus {
-  border-color: #38bdf8;
+  border-color: #9CAF88;
 }
 
 .predict-btn {
   width: 100%;
   padding: 13px;
-  background: #38bdf8;
-  color: #0f172a;
+  background: #A7A7A7;
+  color: #1a1a18;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   transition: background 0.2s;
+  letter-spacing: 0.02em;
 }
 
-.predict-btn:hover   { background: #0ea5e9; }
+.predict-btn:hover   { background: #9c9c90; }
 .predict-btn:disabled {
-  background: #334155;
-  color: #64748b;
+  background: #9c9c90;
+  color: #9c9c90;
   cursor: not-allowed;
 }
 
 .placeholder {
   text-align: center;
-  color: #64748b;
-  padding: 40px 24px;
+  color: #64746b;
+  padding: 50px 24px;
 }
 
 .placeholder .hint {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  color: #475569;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: #4a4a44;
 }
 
 .error-card {
-  border-color: #dc2626;
-  color: #fca5a5;
+  border-color: #CC5500;
+  color: #e8a87c;
 }
 
 .result-card {
@@ -208,52 +223,58 @@ body {
 }
 
 .engine-label {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  margin-bottom: 12px;
-  font-weight: 600;
+  font-size: 0.78rem;
+  color: #A7A7A7;
+  margin-bottom: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
+/* ── Gauge ── */
 .gauge {
   width: 100%;
-  max-width: 220px;
-  margin: 0 auto 16px;
+  max-width: 240px;
+  margin: 0 auto 18px;
   display: block;
 }
 
 .status-badge {
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: white;
+  letter-spacing: 0.12em;
+  color: #232320;
   margin-bottom: 12px;
+  background-color: #934d1b !important;
 }
 
 .recommendation {
-  color: #94a3b8;
-  font-size: 0.9rem;
+  color: #A7A7A7;
+  font-size: 0.88rem;
   margin-bottom: 16px;
 }
 
 .cost-box {
-  background: #0f172a;
+  background: #1a1a18;
   border-radius: 8px;
   padding: 14px;
-  border: 1px solid #334155;
+  border: 1px solid #2e2e28;
 }
 
 .cost-label {
-  font-size: 0.8rem;
-  color: #94a3b8;
+  font-size: 0.75rem;
+  color: #A7A7A7;
   margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .cost-value {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #4ade80;
+  color: #9CAF88;
 }
 
 .stats-grid {
@@ -264,52 +285,53 @@ body {
 }
 
 .stat-card {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #232320;
+  border: 1px solid #2e2e28;
   border-radius: 10px;
   padding: 14px;
   text-align: center;
 }
 
 .stat-label {
-  font-size: 0.72rem;
-  color: #64748b;
+  font-size: 0.68rem;
+  color: #64746b;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
+  letter-spacing: 0.07em;
+  margin-bottom: 5px;
 }
 
 .stat-value {
   font-size: 1rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #CC5500;
 }
 
 .history-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.83rem;
 }
 
 .history-table th {
   text-align: left;
   padding: 8px 10px;
-  color: #64748b;
-  font-size: 0.75rem;
+  color: #64746b;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  border-bottom: 1px solid #334155;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #2e2e28;
 }
 
 .history-table td {
   padding: 10px 10px;
-  border-bottom: 1px solid #1e293b;
-  color: #cbd5e1;
+  border-bottom: 1px solid #1a1a18;
+  color: #c8c4bc;
 }
 
 .status-pill {
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: white;
 }

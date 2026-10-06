@@ -15,56 +15,126 @@ const HEALTHY_ENGINE = {
   s17:392, s20:39.06, s21:23.419
 };
 
+// const DEGRADED_ENGINE = {
+//   s2:642.50, s3:1591.8, s4:1408.2, s6:21.61,
+//   s7:553.21, s8:2388.06, s9:9045.2, s11:47.20,
+//   s12:516.72, s13:2388.0, s14:8048.1, s15:8.3201,
+//   s17:388, s20:38.41, s21:23.010
+// };
+
 const DEGRADED_ENGINE = {
-  s2:642.50, s3:1591.8, s4:1408.2, s6:21.61,
-  s7:553.21, s8:2388.06, s9:9045.2, s11:47.20,
-  s12:516.72, s13:2388.0, s14:8048.1, s15:8.3201,
-  s17:388, s20:38.41, s21:23.010
+  s2:643.50,  s3:1596.0,  s4:1418.0,  s6:21.61,
+  s7:551.80,  s8:2388.06, s9:8990.0,  s11:46.20,
+  s12:500.00, s13:2388.0, s14:7900.0, s15:8.18,
+  s17:375,    s20:37.20,  s21:22.80
 };
 
+// function RULGauge({ rul }) {
+//   const max    = 125;
+//   const pct    = Math.min(rul / max, 1);
+//   const angle  = pct * 180;
+//   const color  = rul < 10 ? '#dc2626' 
+//                : rul < 30 ? '#f59e0b' 
+//                : '#16a34a';
+
+//   const r  = 80;
+//   const cx = 100;
+//   const cy = 100;
+
+//   const toRad = (deg) => (deg - 180) * Math.PI / 180;
+//   const x = cx + r * Math.cos(toRad(angle));
+//   const y = cy + r * Math.sin(toRad(angle));
+
+//   return (
+//     <svg viewBox="0 0 200 120" className="gauge">
+//       {/* Background arc */}
+//       <path
+//         d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+//         fill="none" stroke="#1e293b" strokeWidth="16"
+//       />
+//       {/* Colored arc */}
+//       <path
+//         d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${x} ${y}`}
+//         fill="none" stroke={color} strokeWidth="16"
+//         strokeLinecap="round"
+//       />
+//       {/* RUL text */}
+//       <text x={cx} y={cy - 10}
+//         textAnchor="middle" fill={color}
+//         fontSize="28" fontWeight="bold">
+//         {rul}
+//       </text>
+//       <text x={cx} y={cy + 12}
+//         textAnchor="middle" fill="#94a3b8"
+//         fontSize="10">
+//         cycles remaining
+//       </text>
+//     </svg>
+//   );
+// }
+
 function RULGauge({ rul }) {
-  const max    = 125;
-  const pct    = Math.min(rul / max, 1);
-  const angle  = pct * 180;
-  const color  = rul < 10 ? '#dc2626' 
-               : rul < 30 ? '#f59e0b' 
-               : '#16a34a';
+  const max   = 125;
+  const pct   = Math.min(Math.max(rul / max, 0), 1);
+  const color = rul < 10 ? '#CC5500'
+              : rul < 30 ? '#d4a843'
+              : '#9CAF88';
 
-  const r  = 80;
-  const cx = 100;
-  const cy = 100;
+  // Arc from 180deg to 0deg (left to right)
+  const startAngle = Math.PI;
+  const endAngle   = startAngle - pct * Math.PI;
 
-  const toRad = (deg) => (deg - 180) * Math.PI / 180;
-  const x = cx + r * Math.cos(toRad(angle));
-  const y = cy + r * Math.sin(toRad(angle));
+  const cx = 110, cy = 100, r = 80;
+
+  const x1 = cx + r * Math.cos(startAngle);
+  const y1 = cy + r * Math.sin(startAngle);
+  const x2 = cx + r * Math.cos(endAngle);
+  const y2 = cy + r * Math.sin(endAngle);
+
+  const largeArc = pct > 0.5 ? 1 : 0;
+
+  const trackX2 = cx + r * Math.cos(0);
+  const trackY2 = cy + r * Math.sin(0);
 
   return (
-    <svg viewBox="0 0 200 120" className="gauge">
-      {/* Background arc */}
+    <svg viewBox="0 0 220 120" className="gauge">
+      {/* Track */}
       <path
-        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        fill="none" stroke="#1e293b" strokeWidth="16"
-      />
-      {/* Colored arc */}
-      <path
-        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${x} ${y}`}
-        fill="none" stroke={color} strokeWidth="16"
+        d={`M ${x1} ${y1} A ${r} ${r} 0 0 1 ${trackX2} ${trackY2}`}
+        fill="none" stroke="#CC5500" strokeWidth="14"
         strokeLinecap="round"
       />
-      {/* RUL text */}
-      <text x={cx} y={cy - 10}
-        textAnchor="middle" fill={color}
-        fontSize="28" fontWeight="bold">
+      {/* Filled arc */}
+      {pct > 0 && (
+        <path
+          d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`}
+          fill="none" stroke="#CC5500" strokeWidth="14"
+          strokeLinecap="round"
+        />
+      )}
+      {/* RUL number */}
+      <text x={cx} y={cy - 8}
+        textAnchor="middle"
+        fill="#CC5500"
+        fontSize="30"
+        fontWeight="800">
         {rul}
       </text>
-      <text x={cx} y={cy + 12}
-        textAnchor="middle" fill="#94a3b8"
-        fontSize="10">
+      <text x={cx} y={cy + 14}
+        textAnchor="middle"
+        fill="#A7A7A7"
+        fontSize="9">
         cycles remaining
       </text>
+      {/* Min / Max labels */}
+      <text x="22" y="108"
+        fill="#64746b" fontSize="9">0</text>
+      <text x="192" y="108"
+        fill="#64746b" fontSize="9">125</text>
     </svg>
   );
 }
+
 
 function App() {
   const [sensors,  setSensors]  = useState(HEALTHY_ENGINE);
@@ -86,7 +156,7 @@ function App() {
     setError(null);
     try {
       const response = await axios.post(
-        'http://localhost:8000/predict',
+        'https://predictive-maintenance-rul-prediction.onrender.com/',
         { sensor_values: sensors }
       );
       const data = response.data;
@@ -109,7 +179,7 @@ function App() {
   const getStatusColor = (status) => {
     if (status === 'CRITICAL') return '#dc2626';
     if (status === 'WARNING')  return '#f59e0b';
-    return '#16a34a';
+    return '#9CAF88 ';
   };
 
   return (
