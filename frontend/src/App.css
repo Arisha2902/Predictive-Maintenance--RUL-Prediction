@@ -1,8 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -12,79 +8,158 @@ body {
 }
 
 .app {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .header {
   text-align: center;
-  padding: 40px 0 30px;
+  padding: 30px 0 24px;
 }
 
 .header h1 {
-  font-size: 2.2rem;
-  font-weight: 700;
+  font-size: 2.4rem;
+  font-weight: 800;
   color: #38bdf8;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .header p {
   color: #94a3b8;
-  font-size: 1rem;
+  margin-bottom: 14px;
 }
 
-.container {
+.badges {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #38bdf8;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .main-grid { grid-template-columns: 1fr; }
 }
 
 .card {
   background: #1e293b;
   border-radius: 12px;
-  padding: 28px;
+  padding: 24px;
   border: 1px solid #334155;
+  margin-bottom: 16px;
 }
 
 .card h2 {
-  font-size: 1.3rem;
-  margin-bottom: 6px;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
   color: #f1f5f9;
 }
 
-.subtitle {
-  color: #94a3b8;
-  font-size: 0.9rem;
-  margin-bottom: 24px;
+.card h3 {
+  font-size: 1rem;
+  margin-bottom: 14px;
+  color: #f1f5f9;
 }
 
-.sensor-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.sensor-input label {
-  display: block;
+.card-header h2 { margin-bottom: 0; }
+
+.preset-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.preset {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preset.healthy {
+  background: #166534;
+  color: #86efac;
+}
+
+.preset.critical {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+
+.engine-id-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.engine-id-row label {
   font-size: 0.8rem;
   color: #94a3b8;
-  margin-bottom: 6px;
+  white-space: nowrap;
   font-weight: 600;
-  letter-spacing: 0.05em;
 }
 
-.sensor-input input {
-  width: 100%;
-  padding: 8px 12px;
+.engine-id-input {
+  flex: 1;
+  padding: 7px 12px;
   background: #0f172a;
   border: 1px solid #334155;
   border-radius: 8px;
   color: #e2e8f0;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.2s;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sensor-input label {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.sensor-input input {
+  width: 100%;
+  padding: 7px 10px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  outline: none;
 }
 
 .sensor-input input:focus {
@@ -93,7 +168,7 @@ body {
 
 .predict-btn {
   width: 100%;
-  padding: 14px;
+  padding: 13px;
   background: #38bdf8;
   color: #0f172a;
   border: none;
@@ -104,116 +179,137 @@ body {
   transition: background 0.2s;
 }
 
-.predict-btn:hover {
-  background: #0ea5e9;
-}
-
+.predict-btn:hover   { background: #0ea5e9; }
 .predict-btn:disabled {
   background: #334155;
   color: #64748b;
   cursor: not-allowed;
 }
 
-.error {
+.placeholder {
+  text-align: center;
+  color: #64748b;
+  padding: 40px 24px;
+}
+
+.placeholder .hint {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.error-card {
   border-color: #dc2626;
   color: #fca5a5;
 }
 
-.result {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.rul-display {
+.result-card {
   text-align: center;
 }
 
-.rul-display h2 {
+.engine-label {
+  font-size: 0.85rem;
   color: #94a3b8;
-  font-size: 1rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
-.rul-number {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #38bdf8;
-  line-height: 1;
-}
-
-.cycles {
-  font-size: 1.2rem;
-  color: #94a3b8;
-  margin-left: 8px;
-  font-weight: 400;
+.gauge {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto 16px;
+  display: block;
 }
 
 .status-badge {
-  text-align: center;
-  padding: 12px;
+  padding: 10px 20px;
   border-radius: 8px;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   color: white;
+  margin-bottom: 12px;
 }
 
 .recommendation {
-  text-align: center;
   color: #94a3b8;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
 }
 
-.cost-saving {
+.cost-box {
   background: #0f172a;
   border-radius: 8px;
-  padding: 20px;
-  text-align: center;
+  padding: 14px;
   border: 1px solid #334155;
 }
 
-.cost-saving h3 {
+.cost-label {
+  font-size: 0.8rem;
   color: #94a3b8;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.cost-amount {
-  font-size: 1.8rem;
+.cost-value {
+  font-size: 1.5rem;
   font-weight: 800;
   color: #4ade80;
 }
 
-.cost-note {
-  color: #64748b;
-  font-size: 0.8rem;
-  margin-top: 6px;
-}
-
-.info-grid {
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
-.info-card {
-  background: #0f172a;
-  border-radius: 8px;
-  padding: 16px;
-  text-align: center;
+.stat-card {
+  background: #1e293b;
   border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
 }
 
-.info-card h4 {
+.stat-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.history-table th {
+  text-align: left;
+  padding: 8px 10px;
   color: #64748b;
   font-size: 0.75rem;
-  margin-bottom: 6px;
   text-transform: uppercase;
+  border-bottom: 1px solid #334155;
 }
 
-.info-card p {
-  color: #38bdf8;
+.history-table td {
+  padding: 10px 10px;
+  border-bottom: 1px solid #1e293b;
+  color: #cbd5e1;
+}
+
+.status-pill {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
   font-weight: 700;
-  font-size: 1rem;
+  color: white;
 }
