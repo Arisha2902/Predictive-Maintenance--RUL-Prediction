@@ -185,7 +185,7 @@ function App() {
   return (
     <div className="app">
       <div className="header">
-        <h1>⚙️ Predictive Maintenance</h1>
+        <h1>Predictive Maintenance</h1>
         <p>NASA C-MAPSS Turbofan Engine RUL Predictor</p>
         <div className="badges">
           <span className="badge">Random Forest</span>
@@ -244,7 +244,7 @@ function App() {
               className="predict-btn"
               onClick={handlePredict}
               disabled={loading}>
-              {loading ? '⏳ Predicting...' : '🔍 Predict RUL'}
+              {loading ? ' Predicting...' : ' Predict RUL'}
             </button>
           </div>
         </div>
