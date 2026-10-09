@@ -1,450 +1,294 @@
-# Predictive Maintenance --- Turbofan Engine RUL Prediction
+# ⚙️ Predictive Maintenance — Full Stack ML App
 
-> A full-stack machine learning application that predicts the
-> **Remaining Useful Life (RUL)** of turbofan engines from sensor data
-> using a trained Random Forest regression model.
+> Real-time turbofan engine health monitoring powered by Machine Learning.  
+> Predicts Remaining Useful Life (RUL) from sensor readings and flags engines as SAFE, WARNING or CRITICAL.
 
-[![Frontend](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Backend](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![ML](https://img.shields.io/badge/ML-Scikit--learn-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black)](https://vercel.com/)
+![Python](https://img.shields.io/badge/Python-3.10+-sage?style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-sage?style=flat-square)
+![React](https://img.shields.io/badge/React-18+-sage?style=flat-square)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.3+-sage?style=flat-square)
+![Dataset](https://img.shields.io/badge/Dataset-NASA%20C--MAPSS-amber?style=flat-square)
 
-## 🔗 Live Project
+---
 
-**Frontend:**\
-https://predictive-maintenance-rul-predicti.vercel.app/
+## 🖥️ Live Demo
 
-**Backend API:**\
-https://predictive-maintenance-rul-prediction.onrender.com/
+| Layer | URL |
+|---|---|
+| Frontend (React) | `http://localhost:3000` |
+| Backend (FastAPI) | `http://localhost:8000` |
+| API Docs | `http://localhost:8000/docs` |
 
-------------------------------------------------------------------------
+---
 
-## 📌 Overview
+## 📸 What It Does
 
-Predictive maintenance aims to identify equipment degradation before
-unexpected failure occurs.
+- Enter engine sensor readings manually or load a **Healthy / Degraded** preset
+- Click **Predict RUL** — the ML model returns:
+  - 🟢 **SAFE** — RUL > 30 cycles
+  - 🟡 **WARNING** — RUL between 10 and 30 cycles
+  - 🔴 **CRITICAL** — RUL < 10 cycles — with cost saving estimate
+- Every prediction is saved to **Prediction History** in the session
+- Visual gauge shows RUL as a percentage of max engine life (125 cycles)
 
-This project predicts the **Remaining Useful Life (RUL)** of a turbofan
-engine --- the number of operating cycles remaining before failure.
+---
 
-The project started as an ML pipeline using the **NASA C-MAPSS dataset**
-and was extended into a full-stack application:
-
-``` text
-React Frontend
-      ↓
-FastAPI REST API
-      ↓
-ML Prediction Pipeline
-      ↓
-Random Forest Model
-      ↓
-Predicted RUL
-```
-
-The ML pipeline uses sensor time-series information and engineered
-features such as rolling statistics and rate of change to improve
-prediction performance.
-
-------------------------------------------------------------------------
-
-## ✨ Key Features
-
--   🔮 Predict turbofan engine Remaining Useful Life
--   📊 Sensor-based ML prediction
--   ⚙️ Rolling mean, rolling standard deviation and rate-of-change
-    feature engineering
--   🌳 Random Forest regression
--   🔌 FastAPI backend for model inference
--   ⚛️ React frontend for user interaction
--   🚀 Deployed frontend and backend
--   📈 Model performance comparison
--   🔬 Research-oriented analysis across C-MAPSS subsets
--   💰 Cost-aware maintenance threshold analysis
-
-------------------------------------------------------------------------
-
-## 🏗️ Architecture
-
-``` text
-┌─────────────────────┐
-│      React UI       │
-│                     │
-│  User enters data   │
-└──────────┬──────────┘
-           │
-           │ HTTP / JSON
-           ▼
-┌─────────────────────┐
-│    FastAPI Backend  │
-│                     │
-│  Input validation   │
-│  Feature processing │
-│  Model inference    │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│   ML Prediction     │
-│                     │
-│ Random Forest       │
-│ + Engineered        │
-│   sensor features  │
-└──────────┬──────────┘
-           │
-           ▼
-      Predicted RUL
-```
-
-### Deployment
-
-``` text
-React Frontend ──→ Vercel
-       │
-       │ API Request
-       ▼
-FastAPI Backend ──→ Render
-       │
-       ▼
-ML Model
-```
-
-------------------------------------------------------------------------
-
-## 🧠 Machine Learning
+## 🧠 The ML Model
 
 ### Dataset
+**NASA C-MAPSS Turbofan Engine Degradation Dataset**
+- 4 subsets: FD001, FD002, FD003, FD004
+- 100–260 engines per subset, 20K–61K sensor readings
+- 21 sensors + 3 operational settings per cycle
+- Download: [NASA Prognostics Data Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
 
-The project uses the **NASA C-MAPSS Turbofan Engine Degradation
-Dataset**, primarily using the **FD001 subset**.
+### What We Built
+| Step | What Was Done |
+|---|---|
+| EDA | Dropped constant sensors (std = 0): op3, s1, s5, s10, s16, s18, s19 |
+| RUL | Self-engineered: `RUL = max_cycle - current_cycle` per engine |
+| Capping | RUL capped at 125 cycles (standard in literature) |
+| Features | 60+ features: rolling mean, rolling std, diff for 14 sensors |
+| Models | Linear Regression → Random Forest → XGBoost → LSTM |
+| Unique | Cost-aware threshold optimisation — finds alert threshold that minimises Rs. cost |
 
-FD001 contains:
+### Model Results Across All 4 Subsets
+| Dataset | LR RMSE | RF RMSE | XGB RMSE | LSTM RMSE |
+|---|---|---|---|---|
+| FD001 | 43.41 | **16.01** | 16.48 | 19.10 |
+| FD002 | 43.50 | 20.04 | **19.75** | 22.80 |
+| FD003 | 60.94 | **12.90** | 13.51 | 16.70 |
+| FD004 | 57.83 | 17.62 | **17.60** | 26.10 |
 
--   100 simulated engines
--   20,000+ time-series readings
--   3 operational settings
--   21 sensor measurements
--   Engine and cycle information
+> Random Forest with engineered features matches 2016 LSTM paper (RMSE 16.14) on FD001.
 
-Dataset source:
+### Key Finding — Cost Optimisation
+| Threshold | Missed Failures | False Alarms | Total Cost |
+|---|---|---|---|
+| 2 cycles ✅ optimal | 14 | 16 | Rs. 29,28,000 |
+| 10 cycles | 27 | 17 | Rs. 55,36,000 |
+| 30 cycles (industry default) | 85 | 44 | Rs. 1,73,52,000 |
 
-https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/
+> **83% cost reduction** by using threshold = 2 cycles vs industry default of 30 cycles.
 
-------------------------------------------------------------------------
+---
 
-### RUL Calculation
+## 🗂️ Project Structure
 
-RUL is derived from the engine's failure cycle:
-
-``` python
-RUL = max_cycle(engine) - current_cycle
 ```
-
-For example:
-
-``` text
-Engine failure cycle = 192
-Current cycle        = 100
-
-RUL = 192 - 100
-    = 92 cycles
-```
-
-------------------------------------------------------------------------
-
-### Feature Engineering
-
-Raw sensor values do not directly capture all degradation patterns.
-
-The project creates temporal features from useful sensors:
-
-  Feature                      Purpose
-  ---------------------------- ---------------------------------
-  Rolling Mean                 Captures smoothed sensor trends
-  Rolling Standard Deviation   Captures sensor instability
-  Difference                   Captures rate of change
-
-A rolling window of **5 cycles** was used in the documented experiment.
-
-Features are calculated separately for each engine:
-
-``` python
-groupby("engine_id")
-```
-
-This prevents sensor history from one engine being mixed with another.
-
-The final documented pipeline creates **60+ engineered features from 14
-useful sensors**.
-
-------------------------------------------------------------------------
-
-## 🤖 Model Performance
-
-The documented FD001 experiment produced:
-
-  Model                                              RMSE         MAE
-  ------------------------------------------- ----------- -----------
-  Linear Regression                                 43.87       33.60
-  Random Forest --- Raw Features                    40.76       28.99
-  **Random Forest --- Engineered Features**     **35.32**   **24.68**
-
-### Result
-
-Feature engineering improved Random Forest RMSE:
-
-``` text
-40.76 → 35.32
-```
-
-**\~13% improvement**
-
-The best documented model is:
-
-> **Random Forest Regressor + engineered sensor features**
-
-------------------------------------------------------------------------
-
-## 🔬 Research Extension
-
-Beyond the main FD001 experiment, the project includes research-oriented
-analysis comparing the approach across the four C-MAPSS subsets.
-
-  Model                     FD001       FD002       FD003       FD004
-  ------------------- ----------- ----------- ----------- -----------
-  LSTM                      16.14       24.49       16.18       28.17
-  CNN                       18.45       30.29       19.82       29.16
-  **Random Forest**     **16.01**   **20.04**   **12.90**   **17.62**
-  XGBoost                   16.48       19.75       13.51       17.60
-
-The analysis explores whether strong feature engineering with classical
-ML can remain competitive with more complex models.
-
-### Cost-Aware Maintenance Analysis
-
-The research extension also evaluates different RUL alert thresholds by
-comparing maintenance cost against breakdown cost.
-
-The documented cost model found an optimal threshold of **2 cycles**
-under its chosen assumptions, with an **83% reduction in calculated
-maintenance cost** compared with the 30-cycle reference threshold.
-
-> This threshold is specific to the assumptions used in the analysis and
-> should not be treated as a universal industrial maintenance rule.
-
-------------------------------------------------------------------------
-
-## 🛠️ Tech Stack
-
-### Frontend
-
--   React
--   JavaScript
--   HTML
--   CSS
--   Vercel
-
-### Backend
-
--   Python
--   FastAPI
--   REST API
--   Render
-
-### Machine Learning
-
--   Python
--   Pandas
--   NumPy
--   Scikit-learn
--   Linear Regression
--   Random Forest Regressor
--   StandardScaler
--   Matplotlib
--   Seaborn
-
-### Dataset
-
--   NASA C-MAPSS
--   FD001
-
-------------------------------------------------------------------------
-
-## 📁 Project Structure
-
-``` text
-Predictive-Maintenance--RUL-Prediction/
-│
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── ...
+predictive-maintenance-app/
 │
 ├── backend/
-│   ├── API files
-│   ├── model files
-│   ├── preprocessing files
-│   ├── requirements.txt
-│   └── ...
+│   ├── main.py              ← FastAPI app with /predict endpoint
+│   ├── model.pkl            ← Trained Random Forest model
+│   ├── scaler.pkl           ← Fitted StandardScaler
+│   ├── feature_names.json   ← Feature column names in correct order
+│   └── requirements.txt     ← Python dependencies
 │
-├── mlproject.ipynb
-├── README.md
-└── ...
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── App.js           ← Main React component
+│   │   ├── App.css          ← Earthy sage/amber theme
+│   │   └── index.css        ← Global styles
+│   └── package.json
+│
+├── mlproject.ipynb          ← Full ML notebook (Colab)
+├── AllDataset.ipynb         ← Extended notebook — all 4 subsets
+└── README.md
 ```
 
-> The original ML implementation was notebook-based. The current version
-> extends the ML work into a React + FastAPI full-stack application.
+---
 
-------------------------------------------------------------------------
+## 🚀 How to Run Locally
 
-## ⚙️ Run Locally
+### Prerequisites
+Make sure you have these installed:
+```
+Python 3.10+
+Node.js 18+
+npm 9+
+```
 
-### 1. Clone
-
-``` bash
+### Step 1 — Clone the Repository
+```bash
 git clone https://github.com/Arisha2902/Predictive-Maintenance--RUL-Prediction.git
 cd Predictive-Maintenance--RUL-Prediction
 ```
 
-### 2. Backend
-
-``` bash
+### Step 2 — Set Up Backend
+```bash
 cd backend
-
-python -m venv venv
-```
-
-Windows:
-
-``` bash
-venv\Scripts\activate
-```
-
-Install dependencies:
-
-``` bash
 pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-Start the FastAPI application using the backend entry point configured
-in the repository.
+Backend will start at: `http://localhost:8000`  
+Test it: open `http://localhost:8000` — you should see:
+```json
+{"message": "Predictive Maintenance API Running"}
+```
 
-### 3. Frontend
-
-Open another terminal:
-
-``` bash
+### Step 3 — Set Up Frontend
+Open a **new terminal** (keep backend running):
+```bash
 cd frontend
 npm install
-npm run dev
+npm start
 ```
 
-The React application communicates with the FastAPI backend through HTTP
-requests.
+Frontend will open automatically at: `http://localhost:3000`
 
-------------------------------------------------------------------------
+---
 
-## 🔌 Backend
+## 📡 API Reference
 
-The backend acts as the bridge between the React interface and the ML
-model.
-
-``` text
-Frontend Request
-      ↓
-FastAPI
-      ↓
-Validate Input
-      ↓
-Prepare Features
-      ↓
-Run Model
-      ↓
-Return Prediction
+### `GET /`
+Health check.
+```json
+{"message": "Predictive Maintenance API Running"}
 ```
 
-The exact request and response schema should be taken from the current
-backend implementation.
+### `GET /features`
+Returns list of feature names the model expects.
+```json
+{"features": ["s2", "s3", "s4", ..., "s21_diff"]}
+```
 
-------------------------------------------------------------------------
+### `POST /predict`
+Accepts sensor values, returns RUL prediction.
 
-## 📈 Why Random Forest?
+**Request:**
+```json
+{
+  "sensor_values": {
+    "engine_id": "ENG-001",
+    "s2": 641.82,
+    "s3": 1589.7,
+    "s4": 1400.6,
+    "s6": 21.61,
+    "s7": 554.36,
+    "s8": 2388.06,
+    "s9": 9065.8,
+    "s11": 47.47,
+    "s12": 521.66,
+    "s13": 2388.0,
+    "s14": 8138.6,
+    "s15": 8.4195,
+    "s17": 392,
+    "s20": 39.06,
+    "s21": 23.419
+  }
+}
+```
 
-Random Forest was selected because it works well with tabular data and
-can capture non-linear relationships and interactions between sensor
-features.
+**Response:**
+```json
+{
+  "rul": 99.55,
+  "status": "SAFE",
+  "recommendation": "Engine operating normally",
+  "cost_saving": 0,
+  "readings_used": 3
+}
+```
 
-It also provides feature importance, making it useful for understanding
-which engineered sensor features contribute most to predictions.
+**Status values:**
+| Status | RUL Range | Meaning |
+|---|---|---|
+| SAFE | > 30 cycles | Engine healthy |
+| WARNING | 10–30 cycles | Schedule maintenance |
+| CRITICAL | < 10 cycles | Immediate action required |
 
-Linear Regression was used as a baseline for comparison.
+---
 
-------------------------------------------------------------------------
+## 🧪 Test Cases
 
-## ⚠️ Limitations
+### Healthy Engine (expect SAFE)
+```json
+{"s2":641.82,"s3":1589.7,"s4":1400.6,"s6":21.61,
+ "s7":554.36,"s8":2388.06,"s9":9065.8,"s11":47.47,
+ "s12":521.66,"s13":2388.0,"s14":8138.6,"s15":8.4195,
+ "s17":392,"s20":39.06,"s21":23.419}
+```
 
-The current ML experiment has several limitations:
+### Degrading Engine (expect WARNING after 3+ calls)
+```json
+{"s2":644.12,"s3":1598.2,"s4":1418.5,"s6":21.61,
+ "s7":550.33,"s8":2388.06,"s9":8920.6,"s11":46.01,
+ "s12":498.34,"s13":2388.0,"s14":7910.4,"s15":8.1823,
+ "s17":374,"s20":36.88,"s21":22.61}
+```
 
--   The documented experiment uses a random train/test split rather than
-    a fully time-aware evaluation.
--   Extensive hyperparameter tuning was not performed.
--   The main experiment compares Linear Regression and Random Forest.
--   The feature window of 5 was used as a starting heuristic.
--   The original ML notebook did not include complete model versioning
-    or production monitoring.
+### Failing Engine (expect CRITICAL after 5 calls)
+```json
+{"s2":645.16,"s3":1601.3,"s4":1422.8,"s6":21.61,
+ "s7":549.14,"s8":2388.06,"s9":8855.4,"s11":45.61,
+ "s12":490.72,"s13":2388.0,"s14":7839.2,"s15":8.0541,
+ "s17":368,"s20":36.52,"s21":22.34}
+```
 
-For a production-quality ML system, engine-based splitting or
-walk-forward validation would be preferable.
+> **Note:** Click Predict 4–5 times with the same Engine ID to build up rolling window history.
 
-------------------------------------------------------------------------
+---
 
-## 🚀 Future Improvements
+## 🛠️ Tech Stack
 
--   [ ] Time-series-aware validation
--   [ ] Engine-based train/test split
--   [ ] Hyperparameter tuning
--   [ ] XGBoost / LightGBM comparison
--   [ ] LSTM / GRU models
--   [ ] Automated feature-window selection
--   [ ] Model versioning
--   [ ] Prediction history
--   [ ] Database integration
--   [ ] Authentication and API rate limiting
--   [ ] Model monitoring and drift detection
--   [ ] Automated model retraining
+| Layer | Technology |
+|---|---|
+| ML Model | Scikit-learn Random Forest |
+| Feature Engineering | Pandas rolling window functions |
+| Backend API | Python FastAPI + Uvicorn |
+| Frontend | React 18 |
+| HTTP Client | Axios |
+| Styling | Custom CSS — sage/amber earthy theme |
+| Dataset | NASA C-MAPSS (FD001–FD004) |
 
-------------------------------------------------------------------------
+---
 
-## 💡 What Makes This Project Interesting?
+## 📊 Charts Included in Notebook
 
-The project combines **machine learning + backend engineering + frontend
-development + deployment**.
+| Chart | What It Shows |
+|---|---|
+| Sensor Analysis | Raw vs smoothed vs std vs diff for engine 1 |
+| Actual vs Predicted RUL | Scatter plot — model accuracy across test set |
+| Alert Distribution | Count of SAFE / WARNING / CRITICAL predictions |
+| Cost vs Threshold | Total cost curve across thresholds 1–125 |
+| Model Comparison | RF vs XGBoost vs LSTM bar chart across all subsets |
 
-Instead of keeping the model inside a notebook, the ML workflow is
-exposed through an API and consumed by a web application.
+---
 
-The research extension also moves beyond simply asking:
+## ⚠️ Known Limitations
 
-> **"How accurate is the model?"**
+- Rolling features require multiple sequential readings per engine for full accuracy — single-row predictions default to using 0 for rolling stats
+- Train/test split was random rather than engine-aware (future improvement)
+- Model trained on FD001 only for the API (best performing subset)
+- Cost values are assumed — adjust `BREAKDOWN_COST` and `MAINTENANCE_COST` in `main.py` for your industry
 
-and explores:
+---
 
-> **"How can an RUL prediction be converted into a practical maintenance
-> decision?"**
+## 🔮 Future Improvements
 
-------------------------------------------------------------------------
+- [ ] Split by engine ID for proper time-series evaluation
+- [ ] Add MongoDB to persist prediction history across sessions
+- [ ] Deploy backend on Render, frontend on Vercel
+- [ ] Add XGBoost model toggle in the UI
+- [ ] Extend cost framework to variable cost ratios
+
+---
 
 ## 👩‍💻 Author
 
-### Arisha Firoz
+**Arisha Firoz**  
+B.Tech Computer Science — United College of Engineering and Research, Prayagraj  
 
-B.Tech Computer Science Engineering
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-sage?style=flat-square)](https://www.linkedin.com/in/arisha-firoz-668638331/)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-sage?style=flat-square)](https://github.com/arisha2902)
+[![LeetCode](https://img.shields.io/badge/LeetCode-235%2B%20Problems-amber?style=flat-square)](https://leetcode.com/u/arisha2902/)
 
-[GitHub](https://github.com/Arisha2902) •
-[LinkedIn](https://www.linkedin.com/in/arisha-firoz-668638331/)
+---
 
-------------------------------------------------------------------------
+## 📄 License
 
-⭐ **If you find this project useful, consider starring the
-repository.**
+MIT License — free to use, modify and distribute with attribution.
