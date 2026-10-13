@@ -1,43 +1,74 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #9CAF88;;
+  background: #9CAF88;
   color: #e8e4dc;
   min-height: 100vh;
+}
+
+/* ── FIX 6 — Prevent mobile overflow ── */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .app {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px;
 }
 
+/* ── HEADER ── */
 .header {
   text-align: center;
-  padding: 36px 0 28px;
-  border-bottom: 1px solid #2e2e28;
-  margin-bottom: 28px;
+  padding: 28px 0 22px;
+  border-bottom: 1px solid #7a9068;
+  margin-bottom: 24px;
+}
+
+/* FIX 3 — Logo clickable */
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 6px;
+}
+
+.logo-link:hover h1 {
+  text-decoration: underline;
+  text-decoration-color: #232320;
+}
+
+.logo-icon {
+  font-size: 2rem;
+  line-height: 1;
 }
 
 .header h1 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #232320;
-  margin-bottom: 6px;
   letter-spacing: -0.02em;
 }
 
 .header p {
   color: #484845;
-  font-size: 0.95rem;
-  margin-bottom: 16px;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  margin-top: 4px;
 }
 
 .badges {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -45,12 +76,13 @@ body {
   background: #2a2a24;
   border: 1px solid #3a3a32;
   color: #9CAF88;
-  padding: 4px 14px;
+  padding: 4px 12px;
   border-radius: 20px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
+/* ── MAIN GRID ── */
 .main-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -58,28 +90,25 @@ body {
   align-items: start;
 }
 
-@media (max-width: 768px) {
-  .main-grid { grid-template-columns: 1fr; }
-}
-
+/* ── CARDS ── */
 .card {
   background: #232320;
   border-radius: 14px;
-  padding: 24px;
+  padding: 20px;
   border: 1px solid #2e2e28;
   margin-bottom: 16px;
 }
 
 .card h2 {
-  font-size: 1.05rem;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  margin-bottom: 14px;
   color: #e8e4dc;
   font-weight: 700;
 }
 
 .card h3 {
-  font-size: 0.95rem;
-  margin-bottom: 14px;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
   color: #e8e4dc;
   font-weight: 700;
 }
@@ -88,24 +117,28 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .card-header h2 { margin-bottom: 0; }
 
 .preset-btns {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .preset {
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 6px;
   border: none;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   cursor: pointer;
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .preset.healthy {
@@ -120,15 +153,16 @@ body {
   border: 1px solid #CC5500;
 }
 
+/* ── ENGINE ID ── */
 .engine-id-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .engine-id-row label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #A7A7A7;
   white-space: nowrap;
   font-weight: 600;
@@ -138,25 +172,27 @@ body {
 
 .engine-id-input {
   flex: 1;
+  min-width: 0;
   padding: 7px 12px;
   background: #1a1a18;
   border: 1px solid #3a3a32;
   border-radius: 8px;
   color: #e8e4dc;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   outline: none;
 }
 
+/* ── SENSOR GRID ── */
 .sensor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .sensor-input label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #A7A7A7;
   margin-bottom: 4px;
   font-weight: 700;
@@ -166,20 +202,23 @@ body {
 
 .sensor-input input {
   width: 100%;
-  padding: 7px 10px;
+  padding: 6px 8px;
   background: #1a1a18;
   border: 1px solid #3a3a32;
   border-radius: 6px;
   color: #e8e4dc;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   outline: none;
   transition: border-color 0.2s;
+  /* FIX 6 — prevent overflow on mobile */
+  min-width: 0;
 }
 
 .sensor-input input:focus {
   border-color: #9CAF88;
 }
 
+/* ── PREDICT BUTTON ── */
 .predict-btn {
   width: 100%;
   padding: 13px;
@@ -192,70 +231,60 @@ body {
   cursor: pointer;
   transition: background 0.2s;
   letter-spacing: 0.02em;
+  touch-action: manipulation;
 }
 
 .predict-btn:hover   { background: #9c9c90; }
 .predict-btn:disabled {
-  background: #9c9c90;
+  background: #5a5a54;
   color: #9c9c90;
   cursor: not-allowed;
 }
 
-.placeholder {
-  text-align: center;
-  color: #64746b;
-  padding: 50px 24px;
-}
-
-.placeholder .hint {
-  margin-top: 10px;
-  font-size: 0.82rem;
-  color: #4a4a44;
-}
-
+/* ── ERROR ── */
 .error-card {
   border-color: #CC5500;
   color: #e8a87c;
 }
 
-.result-card {
-  text-align: center;
-}
+/* ── RESULT ── */
+.result-card { text-align: center; }
 
 .engine-label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #A7A7A7;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-/* ── Gauge ── */
+/* ── GAUGE ── */
 .gauge {
   width: 100%;
-  max-width: 240px;
-  margin: 0 auto 18px;
+  max-width: 220px;
+  margin: 0 auto 16px;
   display: block;
 }
 
+/* ── STATUS BADGE ── */
 .status-badge {
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #232320;
-  margin-bottom: 12px;
-  background-color: #934d1b !important;
+  color: #1a1a18;
+  margin-bottom: 10px;
 }
 
 .recommendation {
   color: #A7A7A7;
-  font-size: 0.88rem;
-  margin-bottom: 16px;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
 }
 
+/* ── COST BOX ── */
 .cost-box {
   background: #1a1a18;
   border-radius: 8px;
@@ -264,7 +293,7 @@ body {
 }
 
 .cost-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #A7A7A7;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -272,11 +301,12 @@ body {
 }
 
 .cost-value {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #9CAF88;
 }
 
+/* ── STATS GRID ── */
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -288,12 +318,12 @@ body {
   background: #232320;
   border: 1px solid #2e2e28;
   border-radius: 10px;
-  padding: 14px;
+  padding: 12px;
   text-align: center;
 }
 
 .stat-label {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #64746b;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -301,37 +331,189 @@ body {
 }
 
 .stat-value {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #CC5500;
 }
 
+/* ── HISTORY TABLE ── */
+/* FIX 6 — table scrolls on mobile instead of overflowing */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .history-table {
   width: 100%;
+  min-width: 320px;
   border-collapse: collapse;
-  font-size: 0.83rem;
+  font-size: 0.82rem;
 }
 
 .history-table th {
   text-align: left;
   padding: 8px 10px;
   color: #64746b;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   border-bottom: 1px solid #2e2e28;
+  white-space: nowrap;
 }
 
 .history-table td {
-  padding: 10px 10px;
+  padding: 9px 10px;
   border-bottom: 1px solid #1a1a18;
   color: #c8c4bc;
+  white-space: nowrap;
 }
 
 .status-pill {
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: white;
+  color: #1a1a18;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 24px 0 16px;
+  border-top: 1px solid #7a9068;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #484845;
+}
+
+.footer a {
+  color: #232320;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ════════════════════════════════════════
+   MOBILE — max 768px
+════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  .app {
+    padding: 12px;
+  }
+
+  /* Stack grid to single column */
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .logo-link {
+    gap: 6px;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .header p {
+    font-size: 0.82rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  /* Card header wraps on small screens */
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .preset-btns {
+    width: 100%;
+  }
+
+  .preset {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Sensor grid 2 columns on mobile */
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .sensor-input input {
+    font-size: 0.8rem;
+    padding: 6px 6px;
+  }
+
+  .gauge {
+    max-width: 180px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 10px;
+  }
+
+  .stat-value {
+    font-size: 0.85rem;
+  }
+
+  .cost-value {
+    font-size: 1.2rem;
+  }
+
+  .footer {
+    font-size: 0.78rem;
+    padding: 18px 0 12px;
+  }
+}
+
+/* ════════════════════════════════════════
+   VERY SMALL — max 380px
+════════════════════════════════════════ */
+@media (max-width: 380px) {
+
+  .header h1 {
+    font-size: 1.25rem;
+  }
+
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .badges {
+    gap: 6px;
+  }
+
+  .badge {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .predict-btn {
+    font-size: 0.9rem;
+    padding: 11px;
+  }
 }
