@@ -83,7 +83,7 @@ function App() {
   };
   const wakeUpBackend = async () => {
   try {
-    await axios.get(`${'https://predictive-maintenance-rul-prediction.onrender.com/'}/`, { timeout: 60000 });
+    await axios.get(`${'https://predictive-maintenance-rul-prediction.onrender.com'}/`, { timeout: 60000 });
   } catch (e) {
     // ignore errors — just waking it up
   }
