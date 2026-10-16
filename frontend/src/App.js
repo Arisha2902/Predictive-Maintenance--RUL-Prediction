@@ -81,15 +81,34 @@ function App() {
       [sensor]: parseFloat(value) || 0
     }));
   };
+  const wakeUpBackend = async () => {
+  try {
+    await axios.get(`${'https://predictive-maintenance-rul-prediction.onrender.com/'}/`, { timeout: 60000 });
+  } catch (e) {
+    // ignore errors — just waking it up
+  }
+};
+const showToast = (message, type = 'success') => {
+  console.log(`[${type.toUpperCase()}] ${message}`);
+};
+
+    // ... rest of your code
 
   const handlePredict = async () => {
     setLoading(true);
     setError(null);
+    showToast('Waking up server — please wait up to 30 seconds...', 'success');
+  await wakeUpBackend();
     try {
       const response = await axios.post(
-        'https://predictive-maintenance-rul-prediction.onrender.com/predict',
-        { sensor_values: { ...sensors, engine_id: engineId } }
-      );
+  `${'https://predictive-maintenance-rul-prediction.onrender.com/'}/predict`,
+  { sensor_values: { ...sensors, engine_id: engineId } },
+  { timeout: 60000 }  // wait 60 seconds instead of default 5
+);
+      // const response = await axios.post(
+      //   'https://predictive-maintenance-rul-prediction.onrender.com/predict',
+      //   { sensor_values: { ...sensors, engine_id: engineId } }
+      // );
       const data = response.data;
       setResult(data);
       setHistory(prev => [{
@@ -281,7 +300,7 @@ function App() {
       {/* ── FOOTER ── */}
       <div className="footer">
         <p>
-          Built by{' '}
+          Built by {' '} :{' '}
           <a
             href="https://www.linkedin.com/in/arisha-firoz-668638331/"
             target="_blank"
@@ -289,12 +308,14 @@ function App() {
           >
             Arisha Firoz
           </a>
-          {' '}·{' '}
+          {/* {' '}·{' '} */}
           {/* FIX 4 — Phone clickable */}
-          <a href="tel:+917839172571">+91 78391 72571</a>
           {' '}·{' '}
           {/* FIX 5 — Email clickable */}
-          <a href="mailto:firozarisha49@gmail.com">firozarisha49@gmail.com</a>
+          <p> 
+            Email id {' '}:{' '}
+             <a href="mailto:firozarisha49@gmail.com">firozarisha49@gmail.com</a></p>
+         
         </p>
       </div>
 
