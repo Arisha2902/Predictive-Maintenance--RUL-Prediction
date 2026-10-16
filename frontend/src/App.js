@@ -101,7 +101,7 @@ const showToast = (message, type = 'success') => {
   await wakeUpBackend();
     try {
       const response = await axios.post(
-  `${'https://predictive-maintenance-rul-prediction.onrender.com/'}/predict`,
+  `${'https://predictive-maintenance-rul-prediction.onrender.com'}/predict`,
   { sensor_values: { ...sensors, engine_id: engineId } },
   { timeout: 60000 }  // wait 60 seconds instead of default 5
 );
